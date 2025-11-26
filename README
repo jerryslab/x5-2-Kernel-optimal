@@ -1,7 +1,8 @@
-Optimizeed kernel config for Oracle Sunfire X5-2 server running KVM/Libvirt hypervisor.
+Optimizeed kernel config for Oracle Sunfire X5-2 server running KVM/Libvirt hypervisor.  Debian my distro of 
+choice for these workload types.
 
-This is forked from kernel.org stable.   I also add the forky (debian) patchset, including 
-all of those that are relevant for this purpose.
+This source is forked from kernel.org stable with the forky (debian) patchset added or most of it
+I included all of those that are relevant for this purpose.
 
 The patchlist can be found in the forky_patchlist.txt file.  The forky patches and list can be 
 pulled from https://salsa.debian.org/kernel-team/linux.git
