@@ -9,7 +9,7 @@ pulled from https://salsa.debian.org/kernel-team/linux.git
 So what did I do to the config?  I started with the default debian config kernel config-6.1.0-39-amd64 
 (linux-image-6.1.0-39-amd64.deb)
 
-#############################################################################
+##########################################################################################################################################################
 
 1. Kernel Configuration Optimizations
 
@@ -163,6 +163,16 @@ Capabilities:
 
 #############################################################################
 
+Logical next steps?
+
+  1. Apply cset CPU shielding for the tape process
+     Pin ltfs and ltfs_ordered_copy to isolated CPUs.
+
+  2. Optional hugepages for high-memory VMs..can configure per-VM hugepage pools.
+
+  3. Add tuned-adm profile for "virtual-host"
+
+##########################################################################################################################################################
 
 
 
