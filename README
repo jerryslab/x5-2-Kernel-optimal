@@ -3,11 +3,11 @@ Optimizeed kernel config for Oracle Sunfire X5-2 server running KVM/Libvirt hype
 This is forked from kernel.org stable.   I also add the forky (debian) patchset, including all of those that are relevant for this purpose.
 The patchlist can be found in the forky_patchlist.txt file.
 
-So what did I do to the config?
+So what did I do to the config?  I started with the default debian config kernel config-6.1.0-39-amd64 (linux-image-6.1.0-39-amd64.deb)
+
+#############################################################################
 
 1. Kernel Configuration Optimizations
-
-These were applied via the diff I generated against your uploaded config-6.1.0-39-amd64, plus the changes you manually integrated.
 
 🧬 CPU / Scheduler
 
@@ -54,6 +54,7 @@ Removed wireless stacks completely
 Leaned out kernel to reduce .text and slab footprint
 Explicitly disabled virtualization guest drivers (only host drivers kept)
 
+#############################################################################
 2. Runtime System Tuning
 
 A. IRQ and NUMA tuning
@@ -69,29 +70,28 @@ Isolated IRQs from isolated CPU pools
 
 ✔ CPU isolation (kernel command line)
 
-Added: isolcpus=2-15,34-47 nohz_full=2-15,34-47 rcu_nocbs=2-15,34-47 
-to the grub defaults.
+  Added: isolcpus=2-15,34-47 nohz_full=2-15,34-47 rcu_nocbs=2-15,34-47 
+  to the grub defaults.
 
 B. Tape (LTFS) I/O tuning
 
-Created entries to reduce tape latency and avoid I/O merging:
+Created sysctl entries to reduce tape latency and avoid I/O merging:
 
-/etc/sysctl.d/99-tape.conf
-vm.dirty_background_ratio = 2
-vm.dirty_ratio = 4
-vm.dirty_expire_centisecs = 500
-vm.dirty_writeback_centisecs = 100
-
+  /etc/sysctl.d/99-tape.conf
+  vm.dirty_background_ratio = 2
+  vm.dirty_ratio = 4
+  vm.dirty_expire_centisecs = 500
+  vm.dirty_writeback_centisecs = 100
 
 These significantly reduce stall times for streaming tape workloads.
 
-/usr/local/sbin/tape-tune.sh
+/usr/local/sbin/tape-tune.sh  (also will appear here when I commit them)
 
 Configured to set:
 
-queue_depth=1
-nomerges=2
-scheduler=none
+  queue_depth=1
+  nomerges=2
+  scheduler=none
 
 
 For:
