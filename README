@@ -93,9 +93,56 @@ Configured to set:
   nomerges=2
   scheduler=none
 
+To help:
 
-For:
+  * The tape block device (via scsi-generic)
+  * All LTFS backends
 
-The tape block device (via scsi-generic)
+#############################################################################
 
-All LTFS backends
+3. NIC tuning (ixgbe X540-AT2)
+
+✔ Hardware offloads validated (ethtool)
+
+  RX/TX checksum
+  TSO/GSO/GRO
+  Scatter-gather
+  RSS with 63 queues
+  Flow-director left off (correct for virtualization host)
+
+✔ Ring sizes increased
+
+I applied:
+
+  ethtool -G eno3 rx 4096 tx 4096
+  ethtool -G eno4 rx 4096 tx 4096
+
+via a simple "bigrings" script added ti if-up.d
+
+✔ Sysctl network tuning
+
+/etc/sysctl.d/99-network.conf:
+
+  net.core.rmem_max = 536870912
+  net.core.wmem_max = 536870912
+  net.core.netdev_max_backlog = 300000
+  net.ipv4.tcp_rmem = 4096 87380 33554432
+  net.ipv4.tcp_wmem = 4096 65536 33554432
+  net.ipv4.tcp_low_latency = 1
+  net.ipv4.tcp_mtu_probing = 1
+
+#############################################################################
+
+4. NUMA-aware VM Pinning Framework
+
+Created:  /usr/local/sbin/pinvm
+
+Capabilities:
+
+  Auto-detect best NUMA node
+  Score based on free mem + CPU load
+  Apply host CPU pinning
+  Apply guest vCPU pinning
+  Pin emulator threads
+  Show dry-run summary
+
