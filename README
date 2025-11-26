@@ -12,69 +12,44 @@ These were applied via the diff I generated against your uploaded config-6.1.0-3
 🧬 CPU / Scheduler
 
 Enabled CONFIG_NO_HZ_FULL (full tickless) for isolated CPUs
-
 Enabled CONFIG_RCU_NOCB_CPU for offloading RCU from isolated CPUs
-
 Enabled CONFIG_SCHED_ISO (if present on your kernel base)
-
 Enabled CONFIG_SCHED_AUTOGROUP=n to reduce scheduler jitter
-
 Enabled CONFIG_HZ_1000 for high-resolution KVM host timing
-
 Disabled unused scheduler debug configs
 
 🧬 IOMMU / VT-d
 
 Enabled Intel VT-d (CONFIG_INTEL_IOMMU_DEFAULT_ON=y)
-
 Enabled CONFIG_IRQ_REMAP=y
-
 Enabled CONFIG_VFIO, CONFIG_VFIO_PCI, CONFIG_VFIO_NOIOMMU`
 
 🧬 Block I/O / SCSI / Tape
 
 Enabled SCSI passthrough optimizations
-
 Removed all desktop storage drivers (USB mass storage, FireWire, etc.)
-
 Kept megaraid_sas, mptsas, sg, st, and LTFS-critical paths
-
 Disabled all MD/RAID, Bcache, and rarely-used block layers
-
 Disabled rotational device heuristics
-
 Defaulted I/O scheduler to none or mq-deadline for 10Gb NIC and tape backends
 
 🧬 Networking
 
 Enabled all Intel X540 (ixgbe) offloads
-
 Enabled GRO, GSO, LRO hardware features
-
 Disabled Wi-Fi, Bluetooth, consumer protocols
-
 Disabled network debugging
-
 Kept VXLAN, TAP, TUN, macvtap, bridging, vhost-net
 
 🧬 General Decrufting
 
 Removed sound subsystem
-
 Removed ACPI video + GPU drivers
-
 Removed DRM, fbcon, EFI fb
-
 Removed all desktop filesystems (FUSE extras, exfat, msdos, udf, etc.)
-
 Removed debugging frameworks
-
 Removed tablet, HID-multimedia, bluetooth HID, and gamepad support
-
 Removed unneeded USB drivers (camera, wifi, serial gadgets, etc.)
-
 Removed wireless stacks completely
-
 Leaned out kernel to reduce .text and slab footprint
-
 Explicitly disabled virtualization guest drivers (only host drivers kept)
