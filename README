@@ -1,9 +1,13 @@
 Optimizeed kernel config for Oracle Sunfire X5-2 server running KVM/Libvirt hypervisor.
 
-This is forked from kernel.org stable.   I also add the forky (debian) patchset, including all of those that are relevant for this purpose.
-The patchlist can be found in the forky_patchlist.txt file.
+This is forked from kernel.org stable.   I also add the forky (debian) patchset, including 
+all of those that are relevant for this purpose.
 
-So what did I do to the config?  I started with the default debian config kernel config-6.1.0-39-amd64 (linux-image-6.1.0-39-amd64.deb)
+The patchlist can be found in the forky_patchlist.txt file.  The forky patches and list can be 
+pulled from https://salsa.debian.org/kernel-team/linux.git
+
+So what did I do to the config?  I started with the default debian config kernel config-6.1.0-39-amd64 
+(linux-image-6.1.0-39-amd64.deb)
 
 #############################################################################
 
@@ -144,5 +148,21 @@ Capabilities:
   Apply host CPU pinning
   Apply guest vCPU pinning
   Pin emulator threads
-  Show dry-run summary
+  Show dry-run summary & prompt (y/n)
+
+#############################################################################
+
+5. System services and boot
+
+* irqbalance disabled
+
+     Because manual/NUMA IRQ placement is superior on dual-socket Xeon E5-2699 v3.
+     Removed desktop boot services (fstrim.timer, cloud-init, etc.)
+
+* Fixed UEFI /boot/efi mount issues on BIOS-mode VMs
+
+#############################################################################
+
+
+
 
