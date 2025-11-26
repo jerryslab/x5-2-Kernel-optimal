@@ -53,3 +53,49 @@ Removed unneeded USB drivers (camera, wifi, serial gadgets, etc.)
 Removed wireless stacks completely
 Leaned out kernel to reduce .text and slab footprint
 Explicitly disabled virtualization guest drivers (only host drivers kept)
+
+2. Runtime System Tuning
+
+A. IRQ and NUMA tuning
+
+✔ IRQ balancer disabled for tuned devices
+
+Wrote and deployed:
+/usr/local/sbin/irq-optimizer  (see git project for it)
+
+Moved interrupt-heavy NIC queues to match NUMA topology
+Spread interrupts across correct local NUMA node
+Isolated IRQs from isolated CPU pools
+
+✔ CPU isolation (kernel command line)
+
+Added: isolcpus=2-15,34-47 nohz_full=2-15,34-47 rcu_nocbs=2-15,34-47 
+to the grub defaults.
+
+B. Tape (LTFS) I/O tuning
+
+Created entries to reduce tape latency and avoid I/O merging:
+
+/etc/sysctl.d/99-tape.conf
+vm.dirty_background_ratio = 2
+vm.dirty_ratio = 4
+vm.dirty_expire_centisecs = 500
+vm.dirty_writeback_centisecs = 100
+
+
+These significantly reduce stall times for streaming tape workloads.
+
+/usr/local/sbin/tape-tune.sh
+
+Configured to set:
+
+queue_depth=1
+nomerges=2
+scheduler=none
+
+
+For:
+
+The tape block device (via scsi-generic)
+
+All LTFS backends
